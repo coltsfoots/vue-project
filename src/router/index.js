@@ -13,6 +13,10 @@ export default new Router({
     {
       path: '/login',
       component: _import('login/login')
+    },
+    {
+      path: '/register',
+      component: _import('register/register')
     }
   ]
 })

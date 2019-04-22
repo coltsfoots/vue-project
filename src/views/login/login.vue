@@ -39,6 +39,7 @@
 						</span>
 					</el-form-item>
 					<el-button class="login-btn" type="primary" @click="handleLogin">登录</el-button>
+					<p class="register">还没有账号? <router-link to='/register'>立即注册</router-link></p>
 				</el-form>
 			</el-col>
 		</el-row>
@@ -146,6 +147,14 @@ export default {
 		color: #889aa4;
 		cursor: pointer;
 		user-select: none;
+	}
+	.register {
+		text-align: center;
+		color: #fff;
+		a {
+			text-decoration: none;
+			color: aqua;
+		}
 	}
 }
 </style>
