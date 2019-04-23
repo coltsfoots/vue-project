@@ -11,8 +11,9 @@
 					:span="8"
 					v-for="item in type"
 					:key="item.title"
+					@click.native="chooseType(item)"
 					:class="{active: item.type === selectedType.type}"
-					@click.native="chooseType(item)">
+				>
 					<span class="svg-container">
 						<svg-icon :icon-class="item.icon"></svg-icon>
 					</span>
@@ -20,21 +21,45 @@
 				</el-col>
 			</el-row>
 		</div>
-		<register-item :is-user="selectedType && selectedType.type !== 'user'"></register-item>
-		<div>
-			<el-button v-if="active > 0" @click="prev">上一步</el-button>
-			<el-button :disabled="!selectedType.type" @click="next">{{active === 2 ? '我知道了' : active === 1 ? '提交审核' : '下一步'}}</el-button>
+		<el-form v-show="active === 1" :model="registerForm" :rules="registerRules" label-position="right" label-width="120px">
+      <div v-show="selectedType.type !== 'user'">
+        <h2>基本信息</h2>
+        <el-form-item prop="companyName" label="商户名称">
+          <el-input v-model="registerForm.companyName" placeholder="请输入营业执照上的主体名称"></el-input>
+        </el-form-item>
+        <el-form-item prop="simpleName" label="商户主体简称">
+          <el-input v-model="registerForm.simpleName" placeholder="请输入商户主体简称"></el-input>
+        </el-form-item>
+        <el-form-item prop="area" label="所在区域">
+          <el-input></el-input>
+        </el-form-item>
+      </div>
+      <h2>管理员信息</h2>
+      <el-form-item prop="adminName" label="管理员姓名">
+        <el-input v-model="registerForm.adminName" placeholder="请输入管理员姓名"></el-input>
+      </el-form-item>
+      <el-form-item prop="telephone" label="管理员手机号">
+        <el-input v-model="registerForm.telephone" placeholder="请输入管理员手机号"></el-input>
+      </el-form-item>
+    </el-form>
+		<div v-show="active === 2" style="text-align: center;">
+			<span class="svg-container">
+				<svg-icon icon-class="right"></svg-icon>
+			</span>
+		</div>
+		<div class="btn-group">
+			<el-button v-show="active > 0" @click="prev">上一步</el-button>
+			<el-button
+				:disabled="!selectedType.type"
+				@click="next"
+			>{{active === 2 ? '我知道了' : active === 1 ? '提交审核' : '下一步'}}</el-button>
 		</div>
 	</div>
 </template>
 
 <script>
-import RegisterItem from './components/index'
 export default {
   name: 'Register',
-  components: {
-    RegisterItem
-  },
   data() {
     return {
       active: 0,
@@ -55,7 +80,21 @@ export default {
           type: 'user'
         }
       ],
-      selectedType: {}
+      selectedType: {},
+      registerForm: {
+        companyName: '',
+        simpleName: '',
+        area: '',
+        adminName: '',
+        telephone: ''
+      },
+      registerRules: {
+        companyName: [{ required: true, trigger: 'blur', message: '商户名称不能为空' }],
+        simpleName: [{ required: true, trigger: 'blur', message: '商户简称不能为空' }],
+        area: [{ required: true, trigger: 'blur', message: '所在区域不能为空' }],
+        adminName: [{ required: true, trigger: 'blur', message: '管理员姓名不能为空' }],
+        telephone: [{ required: true, trigger: 'blur', message: '管理员手机号码不能为空' }]
+      }
     }
   },
   methods: {
@@ -78,12 +117,17 @@ export default {
 .register-container {
 	width: 40%;
 	margin: 100px auto;
+	box-sizing: border-box;
+	.svg-container {
+		font-size: 100px;
+		color: #00BFBF;
+	}
 	.choose-type {
 		text-align: center;
-		.el-col {
-			.svg-container {
-				font-size: 100px;
-				color: #00BFBF;
+		.el-row {
+			display: flex;
+			.el-col {
+				justify-content: space-around;
 			}
 		}
 		.el-col:hover {
@@ -97,7 +141,10 @@ export default {
 			color: #fff;
 			border-radius: 5px;
 		}
-
+	}
+	.btn-group {
+		margin-top: 30px;
+		text-align: center;
 	}
 }
 </style>

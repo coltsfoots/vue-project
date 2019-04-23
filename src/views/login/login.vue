@@ -55,16 +55,34 @@ export default {
         userName: '',
         passWord: ''
       },
-      loginRules: {},
+      loginRules: {
+        userName: [{ required: true, trigger: 'blur', message: '用户名不能为空' }],
+        passWord: [
+          { required: true, trigger: 'blur', message: '密码不能为空' },
+          { min: 6, max: 15, message: '长度在 6 到 15 个字符' }
+        ]
+      },
       passwordType: 'password'
     }
   },
   methods: {
     showPwd() {
-
+      if (this.passwordType === 'password') {
+        this.passwordType = 'text'
+      } else {
+        this.passwordType = 'password'
+      }
     },
     handleLogin() {
+      this.$refs.loginForm.validate((valid) => {
+        if (valid) {
+          this.$store.dispatch('LoginByUserName', this.loginForm).then(() => {
+            this.$router.push({ path: '/' })
+          }).catch(() => {
 
+          })
+        }
+      })
     }
   }
 }
