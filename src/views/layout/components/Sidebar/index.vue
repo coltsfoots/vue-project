@@ -1,12 +1,12 @@
 <template>
-	<div class="app-wrapper" :class="{hideSidebar: !sidebar.opened}">
+	<div>
 
 	</div>
 </template>
 
 <script>
 export default {
-  name: 'Layout'
+
 }
 </script>
 
