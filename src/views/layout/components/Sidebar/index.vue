@@ -1,5 +1,6 @@
 <template>
 	<scroll-bar>
+    <div class="logo"></div>
 		<el-menu
 			mode="vertical"
 			:default-active="$route.path"
@@ -7,6 +8,7 @@
 			background-color="#304156"
 			text-color="#bfcbd9"
 			active-text-color="#409eff"
+      unique-opened
 		>
 			<sidebar-item :routes="permissionRouters"></sidebar-item>
 		</el-menu>
@@ -35,5 +37,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.logo {
+  height: 60px;
+}
 </style>

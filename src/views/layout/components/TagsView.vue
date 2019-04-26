@@ -84,7 +84,7 @@ export default {
       this.$nextTick(() => {
         for (const tag of tags) {
           if (tag.to === this.$route.path) {
-            this.$refs.ScrollPane.moveToTarget(tag.$el)
+            this.$refs.scrollPane.moveToTarget(tag.$el)
             break
           }
         }
