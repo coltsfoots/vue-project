@@ -1,5 +1,5 @@
 <template>
-	<el-row class="panel-group" :panelData="panelData" :gutter="40">
+	<el-row class="panel-group" :gutter="40">
 		<el-col
       :xs="12"
       :sm="12"
@@ -11,7 +11,7 @@
       @mouseout.native="handleOut(panel, index)"
     >
 			<div class="card-panel">
-				<div class="card-panel-icon-wrapper" :style="{color: panel.color}" :id="'icon-' + panel.icon + index">
+				<div class="card-panel-icon-wrapper" :style="{color: panel.color || '#34bfa3'}" :id="'icon-' + panel.icon + index">
 					<svg-icon :icon-class="panel.icon" class-name="card-panel-icon"></svg-icon>
 				</div>
 				<div class="card-panel-description">
@@ -38,7 +38,6 @@ export default {
   },
   methods: {
     handleSetBackground(panel, index) {
-      console.log(111)
       const backgroundPanel = document.getElementById('icon-' + panel.icon + index)
       backgroundPanel.style.background = panel.color
       backgroundPanel.style.color = '#fff'
