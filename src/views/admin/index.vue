@@ -1,19 +1,33 @@
 <template>
 	<div>
 		<panel-item :panelData="panelData"></panel-item>
-    <circle-item :caption="'面包'" :value="80"></circle-item>
+    <el-row :gutter="40">
+      <el-col :xs="12" :sm="12" :lg="6">
+        <circle-progress :caption="'面包店'" :value="35"></circle-progress>
+      </el-col>
+      <el-col :xs="12" :sm="12" :lg="6">
+        <circle-progress :caption="'西餐'" :value="28"></circle-progress>
+      </el-col>
+      <el-col :xs="12" :sm="12" :lg="6">
+        <circle-progress :caption="'食堂'" :value="23"></circle-progress>
+      </el-col>
+      <el-col :xs="12" :sm="12" :lg="6">
+        <circle-progress :caption="'其他'" :value="14"></circle-progress>
+      </el-col>
+    </el-row>
+
 	</div>
 </template>
 
 <script>
 import PanelItem from '@/components/Panel'
-import CircleItem from '@/components/Circle'
+import CircleProgress from 'vue-simple-circle-progress'
 import { getPanelData } from '@/api/index'
 export default {
   name: 'Index',
   components: {
     PanelItem,
-    CircleItem
+    CircleProgress
   },
   data() {
     return {

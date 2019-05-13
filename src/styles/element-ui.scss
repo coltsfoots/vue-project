@@ -20,6 +20,13 @@
    }
  }
 
+ .el-table th {
+   background: #f3f3f3 !important;
+ }
+ .el-table th, .el-table td {
+   text-align: center !important;
+ }
+
  .small-padding {
    .cell {
      padding-left: 5px;
