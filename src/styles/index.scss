@@ -127,6 +127,10 @@ code {
 }
 
 //main-container全局样式
+.app-main {
+  height: calc(100vh - 85px);
+}
+
 .app-container {
   padding: 20px;
 }

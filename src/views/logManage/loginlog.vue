@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<custom-form :formOptions="formOptions"></custom-form>
-    <custom-table :tableOptions="tableOptions"></custom-table>
+    <custom-table class="loading-area" :tableOptions="tableOptions"></custom-table>
     <pagination :page="page" @currentChange="getLoginLog({})"></pagination>
 	</div>
 </template>
@@ -97,7 +97,7 @@ export default {
   },
   methods: {
     getLoginLog(formParams) {
-      getLoginLogList(formParams, this.page).then(response => {
+      getLoginLogList(formParams, this.page.pageIndex, this.page.pageSize).then(response => {
         this.tableOptions.dataSource = response.data
       })
     }
