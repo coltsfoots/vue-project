@@ -9,6 +9,9 @@
 			<template slot="handle-column">
 				<el-table-column>
 					<template slot="header">
+						<span>操作</span>
+					</template>
+					<template>
 						<svg-icon icon-class="eye"></svg-icon>
 					</template>
 				</el-table-column>
@@ -22,6 +25,7 @@
 import CustomForm from 'vue-simple-custom-form'
 import CustomTable from 'vue-simple-custom-table'
 import Pagination from 'vue-simple-custom-pagination'
+import { getUsersList } from '@/api/system/users'
 export default {
   name: 'Users',
   components: {
@@ -34,6 +38,7 @@ export default {
       formOptions: {
         formName: 'usersForm',
         inline: true,
+        showIcon: true,
         showResetBtn: true,
         forms: [
           {
@@ -66,7 +71,8 @@ export default {
               }
             ]
           }
-        ]
+        ],
+        handleSubmit: this.getUsers
       },
       tableOptions: {
         columns: [
@@ -98,6 +104,17 @@ export default {
         pageSize: 20,
         totalPage: 343
       }
+    }
+  },
+  created() {
+    console.log(this)
+    this.getUsers({})
+  },
+  methods: {
+    getUsers(formParams) {
+      getUsersList(formParams, this.page.pageIndex, this.page.pageSize).then(res => {
+        this.tableOptions.dataSource = res.data
+      })
     }
   }
 }

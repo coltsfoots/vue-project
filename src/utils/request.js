@@ -1,4 +1,5 @@
 import axios from 'axios'
+import QS from 'qs'
 import { Message } from 'element-ui'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
@@ -10,6 +11,9 @@ const service = axios.create({
 })
 
 service.interceptors.request.use(config => {
+  if (config.method === 'post') {
+    config.data = QS.stringify(config.data)
+  }
   if (store.getters.token) {
     config.headers['A-Token'] = getToken()
   }

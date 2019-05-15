@@ -3,11 +3,11 @@
 		<custom-form :formOptions="formOptions"></custom-form>
 		<custom-table :tableOptions="tableOptions">
       <template slot="handle-column">
-        <el-column label="操作">
+        <el-table-column label="操作">
           <template slot="header">
             <svg-icon icon-class="icon"></svg-icon>
           </template>
-        </el-column>
+        </el-table-column>
       </template>
     </custom-table>
 		<pagination :page="page"></pagination>
