@@ -92,6 +92,7 @@ export default {
     }
   },
   created() {
+    console.log(this)
     getPanelData().then(response => {
       this.pData = response.data
     })

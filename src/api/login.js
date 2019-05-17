@@ -11,3 +11,10 @@ export function loginByUserName(userName, passWord) {
     data
   })
 }
+
+export function getSimpleName() {
+  return request({
+    url: '/getSimpleName',
+    method: 'get'
+  })
+}

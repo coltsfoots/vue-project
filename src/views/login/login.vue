@@ -78,8 +78,8 @@ export default {
         if (valid) {
           this.$store.dispatch('LoginByUserName', this.loginForm).then(() => {
             this.$router.push({ path: '/' })
-          }).catch(() => {
-
+          }).catch((error) => {
+            console.log(error)
           })
         }
       })

@@ -1,8 +1,14 @@
 <template>
 	<div>
-		<custom-form :formOptions="formOptions"></custom-form>
+		<custom-form
+      :formName="'loginLogForm'"
+      :inline="true"
+      :showResetBtn="true"
+      :handleSubmit="getLoginLog"
+      :forms="forms"
+    ></custom-form>
     <custom-table class="loading-area" :tableOptions="tableOptions"></custom-table>
-    <pagination :page="page" @currentChange="getLoginLog({})"></pagination>
+    <pagination :page="page" :layout="'total, prev, pager, next, sizes, jumper'" :totalPage="totalPage" @currentChange="getLoginLog(formParams)"></pagination>
 	</div>
 </template>
 
@@ -20,34 +26,28 @@ export default {
   },
   data() {
     return {
-      formOptions: {
-        formName: 'loginLogForm',
-        showResetBtn: true,
-        inline: true,
-        forms: [
-          {
-            label: '用户姓名',
-            prop: 'userName'
-          },
-          {
-            label: '操作类型',
-            itemType: 'select',
-            prop: 'handleType',
-            options: [
-              {
-                label: '登录',
-                value: 'login'
-              }
-            ]
-          },
-          {
-            label: '操作时间',
-            itemType: 'date',
-            prop: 'handleTime'
-          }
-        ],
-        handleSubmit: this.getLoginLog
-      },
+      forms: [
+        {
+          label: '用户姓名',
+          prop: 'userName'
+        },
+        {
+          label: '操作类型',
+          itemType: 'select',
+          prop: 'handleType',
+          options: [
+            {
+              label: '登录',
+              value: 'login'
+            }
+          ]
+        },
+        {
+          label: '操作时间',
+          itemType: 'date',
+          prop: 'handleTime'
+        }
+      ],
       tableOptions: {
         columns: [
           {
@@ -87,18 +87,24 @@ export default {
       },
       page: {
         pageIndex: 1,
-        pageSize: 20,
-        totalPage: 284
+        pageSize: 20
+      },
+      totalPage: null,
+      formParams: {
+        userName: '',
+        handleType: '',
+        handleTime: ''
       }
     }
   },
   created() {
-    this.getLoginLog({})
+    this.getLoginLog(this.formParams)
   },
   methods: {
     getLoginLog(formParams) {
-      getLoginLogList(formParams, this.page.pageIndex, this.page.pageSize).then(response => {
+      getLoginLogList(formParams, this.page).then(response => {
         this.tableOptions.dataSource = response.data
+        this.totalPage = response.total
       })
     }
   }

@@ -1,6 +1,11 @@
 <template>
 	<div>
-		<custom-form :formOptions="formOptions"></custom-form>
+		<custom-form
+      :forms="formOptions.forms"
+      :inline="true"
+      :size="'small'"
+      :handleSubmit="handleSubmit"
+    ></custom-form>
 		<custom-table :tableOptions="tableOptions">
       <template slot="handle-column">
         <el-table-column label="操作">
@@ -18,6 +23,7 @@
 import CustomForm from 'vue-simple-custom-form'
 import CustomTable from 'vue-simple-custom-table'
 import Pagination from 'vue-simple-custom-pagination'
+import { getSimpleName } from '@/api/login'
 export default {
   name: 'FinaceReconciliation',
   components: {
@@ -28,18 +34,34 @@ export default {
   data() {
     return {
       formOptions: {
-        formName: 'finaceForm',
-        inline: true,
-        showResetBtn: true,
         forms: [
           {
             label: '商户简称',
-            prop: 'simple'
+            prop: 'simple',
+            itemType: 'select',
+            selectFetch: getSimpleName,
+            selectResultField: 'data',
+            selectResultHandle: (item) => {
+              return {
+                value: item.id,
+                label: item.name
+              }
+            }
           },
           {
-            label: '生成时间',
-            itemType: 'date',
-            prop: 'date'
+            label: '下拉框',
+            prop: 'select',
+            itemType: 'select',
+            options: [
+              {
+                label: 'AAAA',
+                value: 'a'
+              },
+              {
+                label: 'BBBB',
+                value: 'b'
+              }
+            ]
           }
         ]
       },
@@ -58,9 +80,16 @@ export default {
       },
       page: {
         pageIndex: 1,
-        pageSize: 20,
-        totalPage: 232
+        pageSize: 20
       }
+    }
+  },
+  created() {
+
+  },
+  methods: {
+    handleSubmit(value) {
+      console.log(value)
     }
   }
 }

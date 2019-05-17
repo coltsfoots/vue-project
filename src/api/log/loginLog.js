@@ -1,14 +1,19 @@
 import request from '@/utils/request'
 
-export function getLoginLogList(loginLogForm, pageIndex, pageSize) {
-  const page = {
-    pageIndex,
-    pageSize
-  }
+export function getLoginLogList(loginLogForm, page) {
   const data = Object.assign(loginLogForm, page)
   return request({
     url: '/getLoginLog',
     method: 'post',
-    data: { ...data }
+    data
+  })
+}
+
+export function getErrorLogList(errorLogForm, page) {
+  const data = Object.assign(errorLogForm, page)
+  return request({
+    url: '/getErrorLog',
+    method: 'post',
+    data
   })
 }
