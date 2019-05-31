@@ -4,22 +4,26 @@
       :formName="'usersForm'"
       :inline="true"
       :size="'small'"
+      :showSerchIcon="true"
       :showResetBtn="true"
       :forms="forms"
+      :handleSubmit="this.handleSubmit"
     >
 			<template slot="button-slot">
-				<el-button type="primary">新增用户</el-button>
+				<el-button type="primary" @click.native="addUserDialogVisible = true">新增用户</el-button>
 			</template>
 		</custom-form>
 		<custom-table :tableOptions="tableOptions">
 			<template slot="handle-column">
 				<el-table-column label="操作" width="200">
 					<template slot-scope="scope">
-            <span style="font-size: 30px;cursor: pointer;display: flex;justify-content: space-around;">
-						  <svg-icon icon-class="view"></svg-icon>
-              <svg-icon icon-class="edit"></svg-icon>
-              <el-dropdown style="font-size: 30px;cursor: pointer;">
-                <svg-icon icon-class="list" style="color: #333;"></svg-icon>
+            <div style="font-size: 30px;cursor: pointer;display: flex;justify-content: space-around;">
+						  <tooltip-icon :iconClass="'view'" :content="'详情'"></tooltip-icon>
+              <tooltip-icon :iconClass="'edit'" :content="'编辑'"></tooltip-icon>
+              <el-dropdown style="font-size: 30px;">
+                <span>
+                  <svg-icon icon-class="list"></svg-icon>
+                </span>
                 <el-dropdown-menu slot="dropdown">
                   <el-dropdown-item v-if="scope.row.status === 0">审核</el-dropdown-item>
                   <el-dropdown-item v-else-if="scope.row.status === 1">停用</el-dropdown-item>
@@ -27,7 +31,7 @@
                   <el-dropdown-item>密码重置</el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
-            </span>
+            </div>
 					</template>
 				</el-table-column>
 			</template>
@@ -40,6 +44,21 @@
       :totalPage="totalPage"
       @currentChange="getUsers({})"
     ></pagination>
+    <template>
+      <el-dialog
+        :visible="addUserDialogVisible"
+        title="新增用户"
+      >
+        <el-form>
+          <el-form-item>
+            <el-input v-model="value"></el-input>
+          </el-form-item>
+        </el-form>
+        <div slot="footer">
+          <el-button>确定</el-button>
+        </div>
+      </el-dialog>
+    </template>
 	</div>
 </template>
 
@@ -47,13 +66,15 @@
 import CustomForm from 'vue-simple-custom-form'
 import CustomTable from 'vue-simple-custom-table'
 import Pagination from 'vue-simple-custom-pagination'
+import TooltipIcon from '@/components/TooltipIcon/index'
 import { getUsersList, getTenant } from '@/api/system/users'
 export default {
   name: 'Users',
   components: {
     CustomForm,
     CustomTable,
-    Pagination
+    Pagination,
+    TooltipIcon
   },
   data() {
     return {
@@ -124,7 +145,9 @@ export default {
         pageIndex: 1,
         pageSize: 20
       },
-      totalPage: null
+      totalPage: null,
+      addUserDialogVisible: false,
+      value: ''
     }
   },
   created() {
@@ -136,6 +159,10 @@ export default {
         this.tableOptions.dataSource = res.data
         this.totalPage = res.total
       })
+    },
+    handleSubmit(formParams) {
+      console.log(formParams)
+      console.log(this)
     }
   }
 }

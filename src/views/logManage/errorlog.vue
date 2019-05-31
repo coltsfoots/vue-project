@@ -12,7 +12,7 @@
 				<el-table-column label="操作" width="80">
 					<template slot-scope="scope">
 						<span style="font-size: 30px;cursor: pointer;">
-							<svg-icon icon-class='view' @click.native="fetchDetails(scope)"></svg-icon>
+              <tooltip-icon :content="'详情'" :iconClass="'view'" @click.native="fetchDetails(scope)"></tooltip-icon>
 						</span>
 					</template>
 				</el-table-column>
@@ -61,13 +61,15 @@
 import CustomForm from 'vue-simple-custom-form'
 import CustomTable from 'vue-simple-custom-table'
 import Pagination from 'vue-simple-custom-pagination'
+import TooltipIcon from '@/components/TooltipIcon/index'
 import { getErrorLogList } from '@/api/log/loginLog'
 export default {
   name: 'LoginLog',
   components: {
     CustomForm,
     CustomTable,
-    Pagination
+    Pagination,
+    TooltipIcon
   },
   data() {
     return {

@@ -9,9 +9,7 @@
 		<custom-table :tableOptions="tableOptions">
       <template slot="handle-column">
         <el-table-column label="操作">
-          <template slot="header">
-            <svg-icon icon-class="icon"></svg-icon>
-          </template>
+
         </el-table-column>
       </template>
     </custom-table>
@@ -41,7 +39,7 @@ export default {
             itemType: 'select',
             selectFetch: getSimpleName,
             selectResultField: 'data',
-            selectResultHandle: (item) => {
+            selectResultHandle: item => {
               return {
                 value: item.id,
                 label: item.name

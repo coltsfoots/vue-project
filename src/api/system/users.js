@@ -15,3 +15,10 @@ export function getTenant() {
     method: 'get'
   })
 }
+
+export function getCascader() {
+  return request({
+    url: '/getCascader',
+    method: 'post'
+  })
+}
